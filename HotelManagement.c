@@ -121,3 +121,28 @@ void menu()
         break;
     }
 } // end of menu()
+
+void fordelay(int j)
+{
+    while (sec < j) // starts at 0
+    {
+
+        if (clock() > stopclock)
+        // if the number of ticks > the amount of ticks that happen in a second
+        // considering that an if statment executes quicker than a second it will have to wait until it catches up,
+        // effectively waiting a second until another second is added
+        {
+            stopclock += 100000; // == 1 sec => adds 1 mil clicks == speed of a 32 bit system
+            printf(".");
+            fflush(stdout); // this empties buffer before it reaches capacity ensuring each period is printed seperately
+            sec++;          // increments
+        }
+    }
+}
+
+void new_acc() 
+{
+    int choice;
+    FILE *ptr;
+    ptr=fopen("record.dat","a+")
+}
