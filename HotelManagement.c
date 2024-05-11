@@ -45,10 +45,11 @@ clock_t stopclock = CLOCKS_PER_SEC;
 
 void main()
 {
-    char pass[15], password[15] = "iamlearning" int i = 0;
+    char pass[15], password[15] = "iamlearning";
+    int i = 0;
     printf("\n\n\t Enter the password to login :");
-    printf("\033[8m");
-    scanf("%s", pass);
+    printf("\033[8m"); // prints the octal number(leading 0) 33 +> ESC
+    scanf("%s", pass); // since strings are already the mem addr of first char in array we do not need &
     printf("\033c");
 
     if (strcmp(pass, password) == 0)
@@ -59,6 +60,64 @@ void main()
         // <0 when the first has a smaller ASCII than the second str
         printf("\n\n Correct Password! Loading...");
         system("clear"); // clears console
-
+        fordelay(5);
+        menu(); // calls / opens menu
     }
-}
+
+    else
+    {
+        printf("/033c");
+        printf("\n\n Wrong Password");
+    login_try:
+        printf("\n Enter 1 to try again and 0 to exit ");
+        scanf("%d", &main_exit);
+
+        if (main_exit == 1)
+        {
+            system("clear");
+            main();
+        }
+        else if (main_exit == 0)
+        {
+            closed();
+        }
+    }
+} // end of main
+
+void menu()
+{
+    int choice;
+    printf("\033c");
+    system("clear");
+    printf("\n");
+    printf("\33[1;31m]");
+    printf("\n\n\t\t\t CUSTOMER ACCOUNT BAKING SYSTEM");
+    printf("\n\n\n\t\t    \033[1;32m] WELCOME TO THE MENU");
+    printf("\n\n\t\t 1. Create new account \n\t2.Update Information of Exisiting Account \n\t3. Transaction\n\t4. Check the Details of an Exisiting Account \n\t5. Remove Exisiting Account \n\t6. View Customer List\n\t 7. Exit \n\n\n\t\t Enter your choice : .");
+    scanf("%d", &choice);
+    printf("\033c");
+    switch (choice)
+    {
+    case 1:
+        new_acc();
+        break;
+    case 2:
+        edit();
+        break;
+    case 3:
+        transact();
+        break;
+    case 4:
+        see();
+        break;
+    case 5:
+        erase();
+        break;
+    case 6:
+        view_list();
+        break;
+    case 7:
+        closed();
+        break;
+    }
+} // end of menu()
