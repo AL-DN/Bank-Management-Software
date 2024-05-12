@@ -75,7 +75,7 @@ void main()
         if (main_exit == 1)
         {
             system("clear");
-            main();
+            main(); // calls the main method again
         }
         else if (main_exit == 0)
         {
@@ -90,7 +90,7 @@ void menu()
     printf("\033c");
     system("clear");
     printf("\n");
-    printf("\33[1;31m]");
+    printf("\33[1;31m]"); // 1 - bold, 2-faint, 0-normal // 31-red, 32 green, 33- yellow
     printf("\n\n\t\t\t CUSTOMER ACCOUNT BAKING SYSTEM");
     printf("\n\n\n\t\t    \033[1;32m] WELCOME TO THE MENU");
     printf("\n\n\t\t 1. Create new account \n\t2.Update Information of Exisiting Account \n\t3. Transaction\n\t4. Check the Details of an Exisiting Account \n\t5. Remove Exisiting Account \n\t6. View Customer List\n\t 7. Exit \n\n\n\t\t Enter your choice : .");
@@ -135,14 +135,72 @@ void fordelay(int j)
             stopclock += 100000; // == 1 sec => adds 1 mil clicks == speed of a 32 bit system
             printf(".");
             fflush(stdout); // this empties buffer before it reaches capacity ensuring each period is printed seperately
-            sec++;          // increments
+            // TO-DO: Wouldnt this increment sec while stopclock catches up to clock()?
+            sec++; // increments
         }
     }
 }
 
-void new_acc() 
+void new_acc()
 {
     int choice;
     FILE *ptr;
-    ptr=fopen("record.dat","a+")
+    ptr = fopen("record.dat", "a+"); // a+ is a setting that points to the EOF or creates the file if it doesnt exist
+account_no:                          // labels allows for jumps in c
+    system("clear");
+    printf("\t\t\t      ADD RECORD ");
+    printf("\n\n\n Enter today's date (mm/dd/yyyy)");
+    scanf("%d/%d/%d", &add.deposit.month, &add.deposit.day, &add.deposit.year);
+    printf("Enter Account number: ");
+    while (fscanf(ptr, "%d %s %d %d %d %d %s %s %lf %s %f %d/%d/%d \n", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposit.month, &add.deposit.day, &add.deposit.year) != EOF)
+        ;
+    {
+        if (check.acc_no == add.acc_no)
+        {
+            printf("Account Already Exists!");
+            goto account_no; // jumps back to add record prompt
+        }
+    }
+    add.acc_no = check.acc_no;
+    printf("\n Enter the name");
+    scanf("%s", add.name);
+    printf("\n Enter the date of birth (mm/dd/yyyy) :");
+    scanf("%d/%d/%d", &add.dob.month, &add.dob.day, &add.dob.year);
+    printf("\n Enter age :");
+    scanf("%d", &add.age);
+    printf("\n Enter the address :");
+    scanf("%s", add.address);
+    printf("\n Enter Citizienship Number: ");
+    scanf("%s", add.citizenship);
+    printf("\n Enter Phone Number: ");
+    scanf("%lf", &add.amt);
+    printf("\n Enter Account Type \n\t #Saving \n\t #Current \n\t #Fixed(Term: 1 YR)\n\t #Fixed(Term: 2 YR)\n\t #Fixed(Term: 3 YR): ");
+    scanf("%s", add.acc_type);
+    
+    fprintf(ptr, "%d %s %d %d %d %d %s %s %lf %s %f %d/%d/%d \n", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposit.month, add.deposit.day, add.deposit.year);
+    fclose(ptr);
+    add_invalid:
+    printf("\n Account created successfully !!");
+    printf("\n\n\n\t Enter 1 to go to the main menu and 0 to Exit : ");
+    scanf("%d", &main_exit);
+    system("clear");
+    if(main_exit==1)
+    {
+        menu();
+    } 
+    else if(main_exit == 0)
+    {
+        closed();
+    } 
+    else 
+    {
+        print("\n Invalid !");
+        goto add_invalid ;
+    }
+}
+
+void edit()
+{
+    
+
 }
