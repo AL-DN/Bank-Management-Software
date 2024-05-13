@@ -255,8 +255,8 @@ void edit()
         edit_invalid:
             printf("Enter 0 to try again, 1 to return to main menu , 2 to Exit");
             scanf("%d", &main_exit);
-            if (main_exit == 1)
-            {
+            if (main_exit == 1) // we use global var here because it makes code eas to resuse in other func
+            {                   
                 menu();
             }
             else if (main_exit == 2)
@@ -380,3 +380,187 @@ void transcat()
     }
 }
 
+void see() 
+{
+    FILE *ptr;
+    int test,rate = 0;
+    int choice;
+    float time;
+    float intrst;
+    ptr=fopen("record.dat","r");
+    printf("Do you want to check by \n1. Account No \n2. Name \n Enter your choice : ");
+    scanf("%d", &choice);
+    
+    if(choice == 1) 
+    {
+        prinf("Enter the account number: ");
+        scanf("%d", &check.acc_no);
+
+        while (fscanf(ptr ,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d \n", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposit.month, &add.deposit.day, &add.deposit.year) != EOF)
+        {
+            if(check.acc_no == add.acc_no) {
+                test = 1;
+                system("clear");
+                printf("\n Account No : %d \n", add.acc_no);
+                printf("\n Account Name : %s \n", add.name);
+                printf("\n Account No : %d \n", add.acc_no);
+                printf("\n DOB : %d/%d/%d \n", add.dob.month, add.dob.day, add.dob.year);
+                printf("\n Age : %d \n", add.age);
+                printf("\n Address : %d \n", add.acc_no);
+                printf("\n Citizenship No : %d \n", add.citizenship);
+                printf("\n Phone No : %lf \n", add.phone);
+                printf("\n Account Type: : %s \n", add.acc_type);
+                printf("Amount Deposited: %f", add.amt);
+                printf("\n Date of Deposit : %d/%d/%d \n", add.deposit.month, add.deposit.day, add.deposit.year);
+                if (strcmp(add.acc_type, "fixed1") == 0 || strcmp(add.acc_type, "fixed2") == 0 || strcmp(add.acc_type, "fixed3") == 0)
+                {
+                    printf("You will get no interest ");
+                }
+
+            }
+        }
+    }
+    // search by name
+    else if(choice == 2)
+    {
+        printf("Please Enter the Name: ");
+        scanf("%s", check.name);
+
+        while (fscanf(ptr ,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d \n", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposit.month, &add.deposit.day, &add.deposit.year) != EOF)
+        {
+            if(strcmp(add.name,check.name) == 0 ) {
+                test = 1;
+                printf("\n Account No : %d \n", add.acc_no);
+                printf("\n Account Name : %s \n", add.name);
+                printf("\n Account No : %d \n", add.acc_no);
+                printf("\n DOB : %d/%d/%d \n", add.dob.month, add.dob.day, add.dob.year);
+                printf("\n Age : %d \n", add.age);
+                printf("\n Address : %d \n", add.acc_no);
+                printf("\n Citizenship No : %d \n", add.citizenship);
+                printf("\n Phone No : %lf \n", add.phone);
+                printf("\n Account Type: : %s \n", add.acc_type);
+                printf("Amount Deposited: %f", add.amt);
+                printf("\n Date of Deposit : %d/%d/%d \n", add.deposit.month, add.deposit.day, add.deposit.year);
+                if (strcmp(add.acc_type, "fixed1") == 0 || strcmp(add.acc_type, "fixed2") == 0 || strcmp(add.acc_type, "fixed3") == 0)
+                {
+                    printf("\n You will get no interest ");
+                }
+            }
+        }
+    }
+    fclose(ptr);
+    if (test != 1)
+        {
+            system("clear");
+            printf("\n record not found!!!");
+        see_invalid:
+            printf("Enter 0 to try again, 1 to return to main menu , 2 to Exit");
+            scanf("%d", &main_exit);
+            if (main_exit == 1)
+            {
+                menu();
+            }
+            else if (main_exit == 2)
+            {
+                closed();
+            }
+            else if (main_exit == 0)
+            {
+                see();
+            }
+            else
+            {
+                printf("\n Invalid Choice !");
+                goto see_invalid;
+            }
+        }
+    else
+        {
+            printf("\n\n\n Enter 1 to go to the main menu and 0 to exit.");
+            scanf("%d", &main_exit);
+            system("clear");
+            if (main_exit == 1)
+            {
+                menu();
+            }
+            else if (main_exit == 0)
+            {
+                closed();
+            }
+        }
+}
+
+void erase() 
+{
+    FILE *old, *newrec;
+    int test = 0;
+    old = fopen("record.dat","r");
+    newrec = fopen("new.dat", "w");
+    printf("Enter the Account Number");
+    scanf("%d", rem.acc_no);
+
+    while (fscanf(old ,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d \n", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposit.month, &add.deposit.day, &add.deposit.year) != EOF)
+    {
+        if(rem.acc_no != add.acc_no) 
+        {
+            fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d \n", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposit.month, &add.deposit.day, &add.deposit.year);
+        }
+        else 
+        {
+            test++;
+            printf("\n Account has been deleted");
+        }
+    }
+
+    fclose(old);
+    fclose(newrec);
+    remove("record.dat");
+    rename("new.dat", "record.dat");
+
+    if (test == 0) 
+    {
+        printf("Record has not been found \n");
+        erase_invalid:
+        printf("Would you like to: \n\t1. Try Again \n\t2. Return to Main Menu \n\t3. Exit ");
+        scanf("%d", &main_exit);
+
+        if(main_exit == 1) 
+        {
+            erase();
+        }
+        else if(main_exit == 2)
+        {
+            menu();
+        }
+        else if(main_exit == 3)
+        {
+            closed();
+        }
+        else
+        {
+            printf("Invalid Option \n");
+            goto erase_invalid;
+        }
+
+    }
+    else
+    {
+        printf("Would you like to: \n\t1. Return to Main Menu \n\t2. Exit ");
+        scanf("%d", &main_exit);
+
+        if(main_exit == 1) 
+        {
+            menu();
+        }
+        else
+        {
+            closed();
+        }
+
+    }
+}
+
+void view_list 
+{
+
+}
