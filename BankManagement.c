@@ -1,6 +1,9 @@
 // Author: Alden Sahi
 // Date: 05/11/2024
-// Project Name: HotelManagement.c
+// Project Name: BankManagement.c
+// Project Description: Uses a file called record.dat as a general ledger. It is manipulated using
+    // the men() to:
+        // create a new account by 
 
 #include <stdio.h>  // I/O lib
 #include <stdlib.h> // allows a bunch of general functiong commonly used in c
@@ -393,7 +396,7 @@ void see()
     
     if(choice == 1) 
     {
-        prinf("Enter the account number: ");
+        printf("Enter the account number: ");
         scanf("%d", &check.acc_no);
 
         while (fscanf(ptr ,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d \n", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposit.month, &add.deposit.day, &add.deposit.year) != EOF)
@@ -560,7 +563,44 @@ void erase()
     }
 }
 
-void view_list 
+void view_list()
 {
+    FILE *view;
+    view= fopen("record.dat","r");
+    int test = 0;
+    system("clear");
+    printf("\n Acc No. \t Name \t\t Address \t Phone \n");
+    while(fscanf(view ,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d \n", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposit.month, &add.deposit.day, &add.deposit.year) != EOF)
+    {
+        printf(" %d \t %s \t %s \t %.0lf", add.acc_no, add.name, add.address,add.phone);
+        test++;
+    }
+    fclose(view);
+    if(test == 0)
+    {
+        system("clear");
+        printf("No Accounts Exist !");
+    }
+    view_list_invalid :
+    printf("Would you like to: \n\t1. Return to Main Menu \n\t2. Exit ");
+    scanf("%d", &main_exit);
 
+    if(main_exit == 1) 
+    {
+        menu();
+    }
+    else if (main_exit == 2)
+    {
+        closed();
+    }
+    else 
+    {
+        printf("Invalid Choice \n");
+        goto view_list_invalid;
+    }
+}
+
+void closed()
+{
+    system("clear");
 }
